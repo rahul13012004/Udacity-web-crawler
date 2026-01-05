@@ -32,20 +32,31 @@ public final class WebCrawlerMain {
   private Profiler profiler;
 
   private void run() throws Exception {
-    Guice.createInjector(new WebCrawlerModule(config), new ProfilerModule()).injectMembers(this);
+    Guice.createInjector(
+                    new WebCrawlerModule(config),
+                    new ProfilerModule())
+            .injectMembers(this);
 
     CrawlResult result = crawler.crawl(config.getStartPages());
+
+    // ===== Write crawl results =====
     CrawlResultWriter resultWriter = new CrawlResultWriter(result);
-    // TODO: Write the crawl results to a JSON file (or System.out if the file name is empty)
-    if (!config.getResultPath().isEmpty()) {
-      resultWriter.write(Path.of(config.getResultPath()));
-    } else {
+    if (config.getResultPath().isEmpty()) {
       try (Writer writer = new BufferedWriter(new OutputStreamWriter(System.out))) {
         resultWriter.write(writer);
       }
+    } else {
+      resultWriter.write(Path.of(config.getResultPath()));
     }
-    // TODO: Write the profile data to a text file (or System.out if the file name is empty)
+
+    // ===== Write profiler output =====
+    if (config.getProfileOutputPath().isEmpty()) {
+      profiler.writeData(new BufferedWriter(new OutputStreamWriter(System.out)));
+    } else {
+      profiler.writeData(Path.of(config.getProfileOutputPath()));
+    }
   }
+
 
   public static void main(String[] args) throws Exception {
     if (args.length != 1) {

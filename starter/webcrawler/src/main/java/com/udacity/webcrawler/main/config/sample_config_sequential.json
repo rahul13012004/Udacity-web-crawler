@@ -8,5 +8,8 @@
   "implementationOverride": "com.udacity.webcrawler.SequentialWebCrawler",
   "maxDepth": 2,
   "timeoutSeconds": 5,
-  "popularWordCount": 5
+  "popularWordCount": 5,
+  "resultPath": "",
+  "profileOutputPath": "/Users/USER/Desktop/profileData.txt"
+
 }
