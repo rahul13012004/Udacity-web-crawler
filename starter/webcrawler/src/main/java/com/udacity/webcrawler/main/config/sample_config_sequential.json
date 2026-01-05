@@ -10,6 +10,6 @@
   "timeoutSeconds": 5,
   "popularWordCount": 5,
   "resultPath": "",
-  "profileOutputPath": "/Users/USER/Desktop/profileData.txt"
+  "profileOutputPath": "profileData.txt"
 
 }
